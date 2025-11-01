@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import dotenv from 'dotenv';

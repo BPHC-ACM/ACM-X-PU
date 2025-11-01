@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable prettier/prettier */
 import { Request, Response } from 'express';
 import { OAuth2Client } from 'google-auth-library';
 

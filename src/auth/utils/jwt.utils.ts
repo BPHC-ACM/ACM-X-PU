@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import jwt, { type SignOptions } from 'jsonwebtoken';
 
 import { config } from '../config/env.config';
