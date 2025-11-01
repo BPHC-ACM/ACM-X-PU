@@ -1,25 +1,25 @@
 /* eslint-disable prettier/prettier */
-import * as jwt from 'jsonwebtoken';
+import jwt, { type SignOptions } from 'jsonwebtoken';
 
 import { config } from '../config/env.config';
-import { JWTPayload } from '../types/user.types';
+import { JwtPayload } from '../types/user.types';
 
-export const generateAccessToken = (payload: JWTPayload): string => {
-  return jwt.sign(payload as object, config.jwtSecret, {
+export const generateAccessToken = (payload: JwtPayload): string => {
+  return jwt.sign(payload, config.jwtSecret, {
     expiresIn: config.jwtExpiresIn,
-  });
+  } as SignOptions);
 };
 
-export const generateRefreshToken = (payload: JWTPayload): string => {
-  return jwt.sign(payload as object, config.jwtRefreshSecret, {
+export const generateRefreshToken = (payload: JwtPayload): string => {
+  return jwt.sign(payload, config.jwtRefreshSecret, {
     expiresIn: config.jwtRefreshExpiresIn,
-  });
+  } as SignOptions);
 };
 
-export const verifyAccessToken = (token: string): JWTPayload => {
-  return jwt.verify(token, config.jwtSecret) as JWTPayload;
+export const verifyAccessToken = (token: string): JwtPayload => {
+  return jwt.verify(token, config.jwtSecret) as JwtPayload;
 };
 
-export const verifyRefreshToken = (token: string): JWTPayload => {
-  return jwt.verify(token, config.jwtRefreshSecret) as JWTPayload;
+export const verifyRefreshToken = (token: string): JwtPayload => {
+  return jwt.verify(token, config.jwtRefreshSecret) as JwtPayload;
 };

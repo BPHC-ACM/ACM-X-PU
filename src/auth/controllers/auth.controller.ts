@@ -14,7 +14,7 @@ const oauth2Client = new OAuth2Client(
 );
 
 // Step 1: Generate Google OAuth URL
-export const googleLogin = (req: Request, res: Response): void => {
+export const googleLogin = (_req: Request, res: Response): void => {
   const authUrl = oauth2Client.generateAuthUrl({
     access_type: 'offline',
     scope: ['profile', 'email'],
