@@ -15,7 +15,9 @@ const oauth2Client = new OAuth2Client(
   config.googleRedirectUri,
 );
 
-// Step 1: Generate Google OAuth URL
+// GET /auth/google/login
+// Body: none
+// Returns: { authUrl: string }
 export const googleLogin = (_req: Request, res: Response): void => {
   const authUrl = oauth2Client.generateAuthUrl({
     access_type: 'offline',

@@ -1,3 +1,6 @@
+// POST /api/users/login
+// Body: { email: string, password: string }
+// Returns: JWT token
 import { Router } from 'express';
 
 import {
