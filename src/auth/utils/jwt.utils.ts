@@ -1,17 +1,17 @@
 /* eslint-disable prettier/prettier */
-import jwt from 'jsonwebtoken';
+import * as jwt from 'jsonwebtoken';
 
 import { config } from '../config/env.config';
 import { JWTPayload } from '../types/user.types';
 
 export const generateAccessToken = (payload: JWTPayload): string => {
-  return jwt.sign(payload, config.jwtSecret, {
+  return jwt.sign(payload as object, config.jwtSecret, {
     expiresIn: config.jwtExpiresIn,
   });
 };
 
 export const generateRefreshToken = (payload: JWTPayload): string => {
-  return jwt.sign(payload, config.jwtRefreshSecret, {
+  return jwt.sign(payload as object, config.jwtRefreshSecret, {
     expiresIn: config.jwtRefreshExpiresIn,
   });
 };

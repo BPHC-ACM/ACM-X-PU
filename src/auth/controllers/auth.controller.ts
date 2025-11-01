@@ -87,7 +87,7 @@ export const refreshAccessToken = (req: Request, res: Response): void => {
   try {
     const { refreshToken } = req.body;
 
-    if (!refreshToken) {
+    if (!refreshToken || typeof refreshToken !== 'string') {
       res.status(400).json({ error: 'Refresh token required' });
       return;
     }
@@ -97,12 +97,14 @@ export const refreshAccessToken = (req: Request, res: Response): void => {
 
     // Generate new access token
     const newAccessToken = generateAccessToken({
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       userId: decoded.userId,
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       email: decoded.email,
     });
 
     res.json({ accessToken: newAccessToken });
-  } catch (error) {
+  } catch {
     res.status(403).json({ error: 'Invalid refresh token' });
   }
 };
