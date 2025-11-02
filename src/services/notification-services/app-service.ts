@@ -1,7 +1,5 @@
-/* eslint-disable import/no-named-as-default-member */
 import 'dotenv/config';
-import type amqplib from 'amqplib';
-import amqplibModule from 'amqplib';
+import * as amqplib from 'amqplib';
 import type { Application, Request, Response } from 'express';
 import express, { json } from 'express';
 
@@ -58,7 +56,7 @@ export async function connectToQueue(
         console.log(
           `Attempting to connect to RabbitMQ (attempt ${attempt}/${config.maxRetries})...`,
         );
-        connection.connection = await amqplibModule.connect(config.rabbitmqUrl);
+        connection.connection = await amqplib.connect(config.rabbitmqUrl);
         connection.channel = await connection.connection.createChannel();
         await connection.channel.assertQueue(config.queueName, { durable: true });
         console.log('Successfully connected to RabbitMQ');

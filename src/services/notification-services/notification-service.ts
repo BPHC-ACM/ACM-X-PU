@@ -1,9 +1,6 @@
-/* eslint-disable import/no-named-as-default-member */
 import 'dotenv/config';
-import type amqplib from 'amqplib';
-import amqp from 'amqplib';
-import type nodemailer from 'nodemailer';
-import nodemailerLib from 'nodemailer';
+import * as amqp from 'amqplib';
+import * as nodemailer from 'nodemailer';
 
 interface Notification {
   to: string;
@@ -32,7 +29,7 @@ export function getConfig(): Config {
 }
 
 export function createTransporter(config: Config): nodemailer.Transporter {
-  return nodemailerLib.createTransport({
+  return nodemailer.createTransport({
     service: config.emailService,
     auth: {
       user: config.emailUser,
@@ -41,7 +38,7 @@ export function createTransporter(config: Config): nodemailer.Transporter {
   });
 }
 
-export async function connectToQueue(config: Config): Promise<amqplib.Channel> {
+export async function connectToQueue(config: Config): Promise<amqp.Channel> {
   const connection = await amqp.connect(config.rabbitmqUrl);
   const channel = await connection.createChannel();
   await channel.assertQueue(config.queueName, { durable: true });
@@ -63,8 +60,8 @@ export async function sendEmail(
 }
 
 export async function processMessage(
-  msg: amqplib.ConsumeMessage,
-  channel: amqplib.Channel,
+  msg: amqp.ConsumeMessage,
+  channel: amqp.Channel,
   transporter: nodemailer.Transporter,
   emailFrom: string,
 ): Promise<void> {
@@ -85,15 +82,15 @@ export async function startWorker(config: Config): Promise<void> {
 
   console.log('Notification worker started');
 
-  await channel.consume(config.queueName, (msg) => {
+  await channel.consume(config.queueName, (msg: amqp.ConsumeMessage | null) => {
     if (!msg) return;
     void processMessage(msg, channel, transporter, config.emailFrom);
   });
 }
 
 export async function shutdown(
-  channel: amqplib.Channel,
-  connection: amqplib.ChannelModel,
+  channel: amqp.Channel,
+  connection: amqp.ChannelModel,
 ): Promise<void> {
   await channel.close();
   await connection.close();
