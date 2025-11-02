@@ -1,7 +1,7 @@
 import jwt, { type SignOptions } from 'jsonwebtoken';
 
 import { config } from '../config/env.config';
-import { JwtPayload } from '../types/user.types';
+import type { JwtPayload } from '../types/user.types';
 
 export const generateAccessToken = (payload: JwtPayload): string => {
   return jwt.sign(payload, config.jwtSecret, {

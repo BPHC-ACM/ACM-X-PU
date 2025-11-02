@@ -1,5 +1,4 @@
-/* eslint-disable prettier/prettier */
-import { User } from './user.types';
+import type { User } from './user.types';
 
 declare global {
   namespace Express {

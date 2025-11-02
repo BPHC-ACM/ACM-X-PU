@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from 'express';
+import type { Request, Response, NextFunction } from 'express';
 
 import { verifyAccessToken } from '../utils/jwt.utils';
 
@@ -6,7 +6,7 @@ export const authenticateToken = (req: Request, res: Response, next: NextFunctio
   try {
     // Get token from Authorization header (Bearer token)
     const authHeader = req.headers.authorization;
-    const token = authHeader && authHeader.split(' ')[1]; // "Bearer TOKEN"
+    const token = authHeader?.split(' ')[1]; // "Bearer TOKEN"
 
     if (!token) {
       res.status(401).json({ error: 'Access token required' });

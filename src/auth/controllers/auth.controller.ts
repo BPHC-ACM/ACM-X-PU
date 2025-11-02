@@ -1,8 +1,8 @@
-import { Request, Response } from 'express';
+import type { Request, Response } from 'express';
 import { OAuth2Client } from 'google-auth-library';
 
 import { config } from '../config/env.config';
-import { User } from '../types/user.types';
+import type { User } from '../types/user.types';
 import { generateAccessToken, generateRefreshToken, verifyRefreshToken } from '../utils/jwt.utils';
 
 interface RefreshTokenRequestBody {
@@ -44,7 +44,7 @@ export const googleCallback = async (req: Request, res: Response): Promise<void>
 
     // Get user info from Google
     const ticket = await oauth2Client.verifyIdToken({
-      idToken: tokens.id_token!,
+      idToken: tokens.id_token ?? '',
       audience: config.googleClientId,
     });
 
@@ -58,8 +58,8 @@ export const googleCallback = async (req: Request, res: Response): Promise<void>
     // Create user object (in production, save to database)
     const user: User = {
       id: payload.sub,
-      email: payload.email!,
-      name: payload.name!,
+      email: payload.email ?? '',
+      name: payload.name ?? '',
       picture: payload.picture,
       googleId: payload.sub,
     };
