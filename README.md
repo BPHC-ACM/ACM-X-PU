@@ -3,21 +3,21 @@
 ## Setup
 
 ```bash
-npm install
-npm run prepare
+pnpm install
+pnpm run prepare
 ```
 
 ## Commands
 
 ```bash
-npm run dev          # Development mode
-npm run build        # Build
-npm start            # Run production build
-npm run lint         # Check linting
-npm run lint:fix     # Fix linting issues
-npm run format       # Format code
-npm run type-check   # TypeScript check
-npm run validate     # Run all checks
+pnpm run dev          # Development mode
+pnpm run build        # Build
+pnpm start            # Run production build
+pnpm run lint         # Check linting
+pnpm run lint:fix     # Fix linting issues
+pnpm run format       # Format code
+pnpm run type-check   # TypeScript check
+pnpm run validate     # Run all checks
 ```
 
 ## Pre-Push Protection
