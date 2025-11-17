@@ -2,9 +2,11 @@ import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import express, { type Request, type Response } from 'express';
+import pinoHttp from 'pino-http';
 
 import { config } from './auth/config/env.config';
 import authRoutes from './auth/routes/auth.routes';
+import { logger } from './config/logger.config';
 import companyRoutes from './routes/company.routes';
 import userDetailsRoutes from './routes/user-details.routes';
 import resumeRoutes from './services/resume-service/routes/resume.routes';
@@ -18,6 +20,7 @@ const app = express();
 app.use(cors({ origin: config.frontendUrl, credentials: true }));
 app.use(express.json());
 app.use(cookieParser());
+app.use(pinoHttp({ logger }));
 
 // Routes
 app.use('/auth', authRoutes);
@@ -32,6 +35,6 @@ app.get('/health', (_req: Request, res: Response) => {
 
 // Start server
 app.listen(config.port, () => {
-  console.log(`Server running on http://localhost:${config.port}`);
-  console.log(`Environment: ${config.nodeEnv}`);
+  logger.info(`Server running on http://localhost:${config.port}`);
+  logger.info(`Environment: ${config.nodeEnv}`);
 });
